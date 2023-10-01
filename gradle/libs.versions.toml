@@ -1,4 +1,5 @@
 [versions]
+#noinspection AndroidGradlePluginVersion
 agp = "8.3.0-alpha03"
 hilt-android-compiler = "2.46.1"
 hilt-compiler = "1.0.0"
@@ -13,7 +14,7 @@ kotlinx-serialization-json = "1.5.1"
 ktor-client-core = "2.3.2"
 lifecycle-runtime-ktx = "2.6.2"
 activity-compose = "1.7.2"
-compose-bom = "2023.03.00"
+compose-bom = "2023.09.02"
 logback-classic = "1.2.11"
 material-icons-extended = "1.5.2"
 navigation-compose = "2.7.3"

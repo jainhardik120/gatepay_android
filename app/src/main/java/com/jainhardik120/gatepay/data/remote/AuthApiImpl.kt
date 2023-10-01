@@ -1,5 +1,7 @@
 package com.jainhardik120.gatepay.data.remote
 
+import com.jainhardik120.gatepay.Result
+import com.jainhardik120.gatepay.data.KeyValueStorage
 import com.jainhardik120.gatepay.data.remote.dto.GoogleLoginRequest
 import com.jainhardik120.gatepay.data.remote.dto.LoginRequest
 import com.jainhardik120.gatepay.data.remote.dto.LoginResponse
@@ -9,6 +11,7 @@ import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.request.HttpRequestBuilder
+import io.ktor.client.request.bearerAuth
 import io.ktor.client.request.headers
 import io.ktor.client.request.request
 import io.ktor.client.request.setBody
@@ -18,9 +21,9 @@ import io.ktor.http.HttpMethod
 import io.ktor.http.contentType
 
 class AuthApiImpl(
-    private val client : HttpClient
+    private val client: HttpClient,
+    private val keyValueStorage: KeyValueStorage
 ) : AuthApi {
-
 
     private suspend inline fun <T, reified R> performApiRequest(
         call: () -> T
@@ -37,6 +40,9 @@ class AuthApiImpl(
 
     private fun HttpRequestBuilder.tokenAuthHeaders(headers: HeadersBuilder.() -> Unit = {}) {
         headers {
+            keyValueStorage.getToken()?.let {
+                bearerAuth(token = it)
+            }
             headers()
         }
     }

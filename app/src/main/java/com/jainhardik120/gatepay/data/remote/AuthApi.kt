@@ -1,5 +1,6 @@
 package com.jainhardik120.gatepay.data.remote
 
+import com.jainhardik120.gatepay.Result
 import com.jainhardik120.gatepay.data.remote.dto.GoogleLoginRequest
 import com.jainhardik120.gatepay.data.remote.dto.LoginRequest
 import com.jainhardik120.gatepay.data.remote.dto.LoginResponse

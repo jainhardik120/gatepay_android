@@ -1,4 +1,4 @@
-package com.jainhardik120.gatepay.data.remote
+package com.jainhardik120.gatepay
 
 import io.ktor.http.HttpStatusCode
 

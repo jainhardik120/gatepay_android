@@ -1,10 +1,14 @@
 package com.jainhardik120.gatepay.di
 
+import android.content.Context
+import com.jainhardik120.gatepay.R
+import com.jainhardik120.gatepay.data.KeyValueStorage
 import com.jainhardik120.gatepay.data.remote.AuthApi
 import com.jainhardik120.gatepay.data.remote.AuthApiImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
@@ -44,10 +48,23 @@ object AppModule {
         }
     }
 
+
     @Provides
     @Singleton
-    fun provideApiImpl(client : HttpClient) : AuthApi{
-        return AuthApiImpl(client)
+    fun provideSharedPreferences(@ApplicationContext context: Context): KeyValueStorage {
+        return KeyValueStorage(
+            context.getSharedPreferences(
+                context.resources.getString(R.string.app_name),
+                Context.MODE_PRIVATE
+            )
+        )
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideApiImpl(client: HttpClient, keyValueStorage: KeyValueStorage): AuthApi {
+        return AuthApiImpl(client, keyValueStorage)
     }
 
 }
