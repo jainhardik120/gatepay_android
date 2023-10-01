@@ -8,8 +8,8 @@ import kotlinx.serialization.Serializable
 data class LoginResponse(
     @SerialName("Email")
     val email: String,
-    @SerialName("name")
-    val name: String,
+    @SerialName("Name")
+    val name: String?,
     val isNewUser: Boolean,
     val token: String,
     val userID: String

@@ -2,7 +2,6 @@ package com.jainhardik120.gatepay.ui.presentation.screens.login
 
 import android.app.Activity
 import android.content.Context
-import android.util.Log
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.IntentSenderRequest
@@ -12,8 +11,12 @@ import androidx.lifecycle.viewModelScope
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
+import com.jainhardik120.gatepay.data.KeyValueStorage
 import com.jainhardik120.gatepay.data.remote.AuthApi
+import com.jainhardik120.gatepay.data.remote.dto.GoogleLoginRequest
 import com.jainhardik120.gatepay.data.remote.dto.LoginRequest
+import com.jainhardik120.gatepay.data.remote.dto.LoginResponse
+import com.jainhardik120.gatepay.data.remote.dto.SignupRequest
 import com.jainhardik120.gatepay.ui.BaseViewModel
 import com.jainhardik120.gatepay.ui.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,18 +25,23 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val api: AuthApi
+    private val api: AuthApi,
+    private val keyValueStorage: KeyValueStorage
 ) : BaseViewModel() {
 
     companion object {
         private const val TAG = "LoginViewModel"
     }
 
-
     private lateinit var oneTapClient: SignInClient
 
     private var _state = mutableStateOf(LoginState())
     val state: State<LoginState> = _state
+
+    private fun handleSuccessfulLogin(loginResponse: LoginResponse) {
+        keyValueStorage.storeValue(KeyValueStorage.LANDING_DONE_KEY, !loginResponse.isNewUser)
+        keyValueStorage.saveLoginResponse(loginResponse)
+    }
 
 
     private fun launchOneTapIntent(
@@ -58,10 +66,10 @@ class LoginViewModel @Inject constructor(
                         IntentSenderRequest.Builder(result.pendingIntent).build()
                     launcher.launch(intentSenderRequest)
                 } catch (e: Exception) {
-
+                    sendUiEvent(UiEvent.ShowToast("Error while logging in using Google : ${e.localizedMessage}"))
                 }
             }.addOnFailureListener { e ->
-
+                sendUiEvent(UiEvent.ShowToast("Error while logging in using Google : ${e.localizedMessage}"))
             }
         }
     }
@@ -73,9 +81,11 @@ class LoginViewModel @Inject constructor(
         val credential = oneTapClient.getSignInCredentialFromIntent(result.data)
         val idToken = credential.googleIdToken
         if (idToken != null) {
-            Log.d(LoginViewModel.TAG, "handleIntentResult: $idToken")
+            makeApiCall({
+                api.googleLogin(GoogleLoginRequest(idToken))
+            }, onSuccess = { handleSuccessfulLogin(it) })
         } else {
-
+            sendUiEvent(UiEvent.ShowToast("Error while logging in using Google"))
         }
     }
 
@@ -83,13 +93,11 @@ class LoginViewModel @Inject constructor(
     fun onEvent(event: LoginEvent) {
         when (event) {
             is LoginEvent.LoginButtonClick -> {
-                if (state.value.email.isNotEmpty() && state.value.password.isNotEmpty()) {
+                if (state.value.loginEmail.isNotEmpty() && state.value.loginPassword.isNotEmpty()) {
 
                     makeApiCall({
-                        api.login(LoginRequest(state.value.email, state.value.password))
-                    }, onSuccess = {
-
-                    })
+                        api.login(LoginRequest(state.value.loginEmail, state.value.loginPassword))
+                    }, onSuccess = { handleSuccessfulLogin(it) })
                 } else {
                     sendUiEvent(UiEvent.ShowSnackbar("Email and Password Required"))
                 }
@@ -104,30 +112,54 @@ class LoginViewModel @Inject constructor(
             }
 
             is LoginEvent.LoginEmailChange -> {
-                _state.value = _state.value.copy(email = event.newEmail)
+                _state.value = _state.value.copy(loginEmail = event.newEmail)
             }
 
             is LoginEvent.LoginPasswordChange -> {
-                _state.value = _state.value.copy(password = event.newPassword)
+                _state.value = _state.value.copy(loginPassword = event.newPassword)
+            }
+
+            is LoginEvent.ConfirmPasswordChange -> {
+                _state.value = _state.value.copy(confirmPassword = event.newConfirmPassword)
+            }
+
+            LoginEvent.RegisterButtonClick -> {
+                if (state.value.registerEmail.isNotEmpty() && state.value.registerName.isNotEmpty() && state.value.registerPassword.isNotEmpty() && state.value.confirmPassword.isNotEmpty()) {
+                    if (state.value.registerPassword != state.value.confirmPassword) {
+                        sendUiEvent(UiEvent.ShowSnackbar("Password and Confirm Password must match"))
+                    } else {
+                        makeApiCall({
+                            api.register(
+                                SignupRequest(
+                                    state.value.registerEmail,
+                                    state.value.registerPassword,
+                                    state.value.registerName
+                                )
+                            )
+                        }, onSuccess = { handleSuccessfulLogin(it) })
+                    }
+                } else {
+                    sendUiEvent(UiEvent.ShowSnackbar("All fields are necessary"))
+                }
+            }
+
+            is LoginEvent.RegisterEmailChange -> {
+                _state.value = _state.value.copy(registerEmail = event.newEmail)
+            }
+
+            is LoginEvent.RegisterNameChange -> {
+                _state.value = _state.value.copy(registerName = event.newName)
+            }
+
+            is LoginEvent.RegisterPasswordChange -> {
+                _state.value = _state.value.copy(registerPassword = event.newPassword)
+            }
+
+            LoginEvent.GoBackToLoginButtonClick -> {
+                sendUiEvent(UiEvent.NavigateBack)
             }
         }
     }
 }
 
 
-data class LoginState(
-    val email: String = "",
-    val password: String = ""
-)
-
-sealed class LoginEvent {
-    object LoginButtonClick : LoginEvent()
-    object CreateAccountButtonClick : LoginEvent()
-    data class GoogleSignInButtonClick(
-        val context: Context,
-        val launcher: ManagedActivityResultLauncher<IntentSenderRequest, ActivityResult>
-    ) : LoginEvent()
-
-    data class LoginEmailChange(val newEmail: String) : LoginEvent()
-    data class LoginPasswordChange(val newPassword: String) : LoginEvent()
-}

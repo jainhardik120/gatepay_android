@@ -42,19 +42,26 @@ class KeyValueStorage(
         const val TOKEN_KEY = "TOKEN"
         const val EMAIL_KEY = "EMAIL"
         const val USER_ID_KEY = "USER_ID"
+        const val LANDING_DONE_KEY = "LANDING_DONE"
     }
 
     fun getValue(key: String): String? {
         return sharedPreferences.getString(key, null)
     }
 
-    private fun storeValue(key: String, value: String) {
+    fun storeValue(key: String, value: String) {
         sharedPreferences.edit()
             .putString(key, value)
             .apply()
     }
 
-    private fun removeValue(key: String) {
+    fun storeValue(key: String, value: Boolean) {
+        sharedPreferences.edit()
+            .putBoolean(key, value)
+            .apply()
+    }
+
+    fun removeValue(key: String) {
         sharedPreferences.edit()
             .remove(key)
             .apply()

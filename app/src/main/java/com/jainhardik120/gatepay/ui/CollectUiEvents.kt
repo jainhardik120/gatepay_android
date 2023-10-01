@@ -29,6 +29,10 @@ fun CollectUiEvents(
                 is UiEvent.ShowToast -> {
                     Toast.makeText(context, event.message, Toast.LENGTH_SHORT).show()
                 }
+
+                UiEvent.NavigateBack -> {
+                    navHostController.navigateUp()
+                }
             }
         }
     }
