@@ -1,10 +1,13 @@
 package com.jainhardik120.gatepay.data.remote
 
-object APIRoutes {
-    private const val HOST = "gatepay-server.vercel.app"
-    private const val BASE_URL = "https://$HOST/api/auth"
+import com.jainhardik120.gatepay.R
+import com.jainhardik120.gatepay.getResourceString
 
-    const val LOGIN_ROUTE = "$BASE_URL/login"
-    const val SIGNUP_ROUTE = "$BASE_URL/register"
-    const val GOOGLE_LOGIN_ROUTE = "$BASE_URL/googleLogin"
+object APIRoutes {
+    private val HOST = getResourceString(R.string.server_host_address)
+    private val BASE_URL = "https://$HOST/api/auth"
+
+    val LOGIN_ROUTE = "$BASE_URL/login"
+    val SIGNUP_ROUTE = "$BASE_URL/register"
+    val GOOGLE_LOGIN_ROUTE = "$BASE_URL/googleLogin"
 }
