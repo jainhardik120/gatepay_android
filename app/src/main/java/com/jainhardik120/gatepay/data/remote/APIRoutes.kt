@@ -14,4 +14,6 @@ object APIRoutes {
     const val CHECK_BALANCE_ROUTE = "$PAYMENTS_BASE_URL/checkBalance"
     const val CHECKOUT_ROUTE = "$PAYMENTS_BASE_URL/checkout"
     const val VERIFY_PAYMENT_ROUTE = "$PAYMENTS_BASE_URL/verifyPayment"
+
+    const val USER_TRANSACTIONS_ROUTE = "$PAYMENTS_BASE_URL/userTransactions"
 }

@@ -13,7 +13,7 @@ import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.jainhardik120.gatepay.Constants
 import com.jainhardik120.gatepay.data.KeyValueStorage
-import com.jainhardik120.gatepay.data.remote.AuthApi
+import com.jainhardik120.gatepay.data.remote.GatepayAPI
 import com.jainhardik120.gatepay.data.remote.dto.GoogleLoginRequest
 import com.jainhardik120.gatepay.data.remote.dto.LoginRequest
 import com.jainhardik120.gatepay.data.remote.dto.LoginResponse
@@ -26,7 +26,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val api: AuthApi,
+    private val api: GatepayAPI,
     private val keyValueStorage: KeyValueStorage
 ) : BaseViewModel() {
 

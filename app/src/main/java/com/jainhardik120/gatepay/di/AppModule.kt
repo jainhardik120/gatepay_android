@@ -3,8 +3,8 @@ package com.jainhardik120.gatepay.di
 import android.content.Context
 import com.jainhardik120.gatepay.R
 import com.jainhardik120.gatepay.data.KeyValueStorage
-import com.jainhardik120.gatepay.data.remote.AuthApi
-import com.jainhardik120.gatepay.data.remote.AuthApiImpl
+import com.jainhardik120.gatepay.data.remote.GatepayAPI
+import com.jainhardik120.gatepay.data.remote.GatepayAPIImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -63,8 +63,8 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideApiImpl(client: HttpClient, keyValueStorage: KeyValueStorage): AuthApi {
-        return AuthApiImpl(client, keyValueStorage)
+    fun provideApiImpl(client: HttpClient, keyValueStorage: KeyValueStorage): GatepayAPI {
+        return GatepayAPIImpl(client, keyValueStorage)
     }
 
 }

@@ -1,6 +1,7 @@
 package com.jainhardik120.gatepay.ui.presentation.screens.home
 
 import android.content.Intent
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
@@ -23,7 +24,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.jainhardik120.gatepay.data.remote.AuthApi
+import com.jainhardik120.gatepay.data.remote.GatepayAPI
 import com.jainhardik120.gatepay.ui.BaseViewModel
 import com.jainhardik120.gatepay.ui.CollectUiEvents
 import com.jainhardik120.gatepay.ui.RechargeActivity
@@ -57,7 +58,7 @@ fun HomeScreen() {
             NavHost(navController, startDestination = "home", modifier = Modifier.padding(it)) {
                 composable(route = "home") {
                     Column {
-                        Text(text = "${state.userBalance}")
+                        Text(text = "Your Balance is INR. ${state.userBalance}")
                         Button(
                             onClick = {
                                 val intent = Intent(context, RechargeActivity::class.java)
@@ -76,7 +77,7 @@ fun HomeScreen() {
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val api: AuthApi
+    private val api: GatepayAPI
 ) : BaseViewModel() {
 
     companion object {
@@ -92,6 +93,13 @@ class HomeViewModel @Inject constructor(
         }, onSuccess = {
             _state.value = _state.value.copy(userBalance = it.balance)
         })
+
+        makeApiCall({ api.userTransactions() }) { transactions ->
+            Log.d(TAG, "UserTransactions: ${transactions.size}")
+            transactions.forEach {
+                Log.d(TAG, "UserTransactions: $it")
+            }
+        }
     }
 
 }

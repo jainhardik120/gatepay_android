@@ -11,6 +11,7 @@ import com.jainhardik120.gatepay.data.remote.dto.LoginResponse
 import com.jainhardik120.gatepay.data.remote.dto.MessageError
 import com.jainhardik120.gatepay.data.remote.dto.RazorpayInfo
 import com.jainhardik120.gatepay.data.remote.dto.SignupRequest
+import com.jainhardik120.gatepay.data.remote.dto.Transaction
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ClientRequestException
@@ -24,10 +25,10 @@ import io.ktor.http.HeadersBuilder
 import io.ktor.http.HttpMethod
 import io.ktor.http.contentType
 
-class AuthApiImpl(
+class GatepayAPIImpl(
     private val client: HttpClient,
     private val keyValueStorage: KeyValueStorage
-) : AuthApi {
+) : GatepayAPI {
 
     private suspend inline fun <T, reified R> performApiRequest(
         call: () -> T
@@ -107,6 +108,12 @@ class AuthApiImpl(
     override suspend fun verifyPayment(request: RazorpayInfo): Result<BalanceResponse, MessageError> {
         return performApiRequest {
             requestBuilder(APIRoutes.VERIFY_PAYMENT_ROUTE, HttpMethod.Post, request)
+        }
+    }
+
+    override suspend fun userTransactions(): Result<Array<Transaction>, MessageError> {
+        return performApiRequest {
+            requestBuilder(APIRoutes.USER_TRANSACTIONS_ROUTE, HttpMethod.Get)
         }
     }
 }

@@ -7,6 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
@@ -14,9 +15,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.jainhardik120.gatepay.Constants
-import com.jainhardik120.gatepay.data.remote.AuthApi
+import com.jainhardik120.gatepay.data.remote.GatepayAPI
 import com.jainhardik120.gatepay.data.remote.dto.AmountRequest
 import com.jainhardik120.gatepay.data.remote.dto.RazorpayInfo
 import com.jainhardik120.gatepay.ui.theme.GatePayTheme
@@ -39,18 +41,12 @@ class RechargeActivity : ComponentActivity(), PaymentResultWithDataListener {
         setContent {
             val state = viewModel.state.value
             GatePayTheme {
-                Surface {
+                Surface(Modifier.fillMaxSize()) {
                     val context = LocalContext.current
                     LaunchedEffect(key1 = Unit, block = {
                         viewModel.uiEvent.collect {
-                            when (it) {
-                                is UiEvent.ShowToast -> {
-                                    Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
-                                }
-
-                                else -> {
-
-                                }
+                            if (it is UiEvent.ShowToast) {
+                                Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                             }
                         }
                     })
@@ -84,7 +80,7 @@ class RechargeActivity : ComponentActivity(), PaymentResultWithDataListener {
 
 @HiltViewModel
 class RechargeViewModel @Inject constructor(
-    private val api: AuthApi
+    private val api: GatepayAPI
 ) : BaseViewModel() {
 
 

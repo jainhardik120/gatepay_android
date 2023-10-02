@@ -10,8 +10,9 @@ import com.jainhardik120.gatepay.data.remote.dto.LoginResponse
 import com.jainhardik120.gatepay.data.remote.dto.MessageError
 import com.jainhardik120.gatepay.data.remote.dto.RazorpayInfo
 import com.jainhardik120.gatepay.data.remote.dto.SignupRequest
+import com.jainhardik120.gatepay.data.remote.dto.Transaction
 
-interface AuthApi {
+interface GatepayAPI {
     suspend fun login(request: LoginRequest) : Result<LoginResponse, MessageError>
     suspend fun register(request: SignupRequest) : Result<LoginResponse, MessageError>
     suspend fun googleLogin(request: GoogleLoginRequest) : Result<LoginResponse, MessageError>
@@ -19,6 +20,8 @@ interface AuthApi {
     suspend fun checkBalance(): Result<BalanceResponse, MessageError>
     suspend fun checkout(request: AmountRequest): Result<CheckoutResponse, MessageError>
     suspend fun verifyPayment(request: RazorpayInfo): Result<BalanceResponse, MessageError>
+
+    suspend fun userTransactions(): Result<Array<Transaction>, MessageError>
 }
 
 
