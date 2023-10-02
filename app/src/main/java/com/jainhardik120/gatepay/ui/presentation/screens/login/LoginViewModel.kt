@@ -11,14 +11,13 @@ import androidx.lifecycle.viewModelScope
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
-import com.jainhardik120.gatepay.R
+import com.jainhardik120.gatepay.Constants
 import com.jainhardik120.gatepay.data.KeyValueStorage
 import com.jainhardik120.gatepay.data.remote.AuthApi
 import com.jainhardik120.gatepay.data.remote.dto.GoogleLoginRequest
 import com.jainhardik120.gatepay.data.remote.dto.LoginRequest
 import com.jainhardik120.gatepay.data.remote.dto.LoginResponse
 import com.jainhardik120.gatepay.data.remote.dto.SignupRequest
-import com.jainhardik120.gatepay.getResourceString
 import com.jainhardik120.gatepay.ui.BaseViewModel
 import com.jainhardik120.gatepay.ui.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -56,7 +55,7 @@ class LoginViewModel @Inject constructor(
                 .setGoogleIdTokenRequestOptions(
                     BeginSignInRequest.GoogleIdTokenRequestOptions.builder()
                         .setSupported(true)
-                        .setServerClientId(getResourceString(R.string.google_client_id))
+                        .setServerClientId(Constants.GOOGLE_CLIENT_ID)
                         .setFilterByAuthorizedAccounts(false)
                         .build()
                 )

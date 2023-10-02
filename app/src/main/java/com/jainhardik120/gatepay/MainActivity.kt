@@ -21,20 +21,6 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-//                    val viewModel: LoginViewModel = hiltViewModel()
-//                    val context = LocalContext.current
-//                    val launcher = rememberLauncherForActivityResult(
-//                        contract = ActivityResultContracts.StartIntentSenderForResult(),
-//                        onResult = viewModel::handleIntentResult
-//                    )
-//
-//                    Column() {
-//                        Button(onClick = {
-//                            viewModel.launchOneTapIntent(context, launcher)
-//                        }) {
-//                            Text(text = "Google Sign In")
-//                        }
-//                    }
                     App()
                 }
             }

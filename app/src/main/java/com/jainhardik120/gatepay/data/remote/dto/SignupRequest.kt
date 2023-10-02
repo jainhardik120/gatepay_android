@@ -12,3 +12,5 @@ data class SignupRequest(
     @SerialName("Name")
     val name: String
 )
+
+

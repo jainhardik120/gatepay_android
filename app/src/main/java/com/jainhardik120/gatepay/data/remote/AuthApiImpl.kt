@@ -2,10 +2,14 @@ package com.jainhardik120.gatepay.data.remote
 
 import com.jainhardik120.gatepay.Result
 import com.jainhardik120.gatepay.data.KeyValueStorage
+import com.jainhardik120.gatepay.data.remote.dto.AmountRequest
+import com.jainhardik120.gatepay.data.remote.dto.BalanceResponse
+import com.jainhardik120.gatepay.data.remote.dto.CheckoutResponse
 import com.jainhardik120.gatepay.data.remote.dto.GoogleLoginRequest
 import com.jainhardik120.gatepay.data.remote.dto.LoginRequest
 import com.jainhardik120.gatepay.data.remote.dto.LoginResponse
 import com.jainhardik120.gatepay.data.remote.dto.MessageError
+import com.jainhardik120.gatepay.data.remote.dto.RazorpayInfo
 import com.jainhardik120.gatepay.data.remote.dto.SignupRequest
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -85,6 +89,24 @@ class AuthApiImpl(
     override suspend fun googleLogin(request: GoogleLoginRequest): Result<LoginResponse, MessageError> {
         return performApiRequest {
             requestBuilder(APIRoutes.GOOGLE_LOGIN_ROUTE, HttpMethod.Post, request)
+        }
+    }
+
+    override suspend fun checkBalance(): Result<BalanceResponse, MessageError> {
+        return performApiRequest {
+            requestBuilder(APIRoutes.CHECK_BALANCE_ROUTE, HttpMethod.Get)
+        }
+    }
+
+    override suspend fun checkout(request: AmountRequest): Result<CheckoutResponse, MessageError> {
+        return performApiRequest {
+            requestBuilder(APIRoutes.CHECKOUT_ROUTE, HttpMethod.Post, request)
+        }
+    }
+
+    override suspend fun verifyPayment(request: RazorpayInfo): Result<BalanceResponse, MessageError> {
+        return performApiRequest {
+            requestBuilder(APIRoutes.VERIFY_PAYMENT_ROUTE, HttpMethod.Post, request)
         }
     }
 }

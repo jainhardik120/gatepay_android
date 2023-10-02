@@ -6,6 +6,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.jainhardik120.gatepay.ui.presentation.screens.home.HomeScreen
 import com.jainhardik120.gatepay.ui.presentation.screens.login.LoginScreen
 
 @Composable
@@ -33,7 +34,7 @@ fun App() {
             LoginScreen()
         }
         composable(AppRoutes.HomeScreen.route) {
-
+            HomeScreen()
         }
     }
 }

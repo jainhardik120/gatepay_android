@@ -1,6 +1,7 @@
 [versions]
 #noinspection AndroidGradlePluginVersion
 agp = "8.3.0-alpha03"
+checkout = "1.6.33"
 hilt-android-compiler = "2.46.1"
 hilt-compiler = "1.0.0"
 hilt-navigation-compose = "1.1.0-alpha01"
@@ -27,6 +28,7 @@ androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-
 androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle-runtime-ktx" }
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "material-icons-extended" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation-compose" }
+checkout = { module = "com.razorpay:checkout", version.ref = "checkout" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt-android-compiler" }
 hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt-android-compiler" }
