@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -25,6 +27,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.jainhardik120.gatepay.data.remote.GatepayAPI
+import com.jainhardik120.gatepay.data.remote.dto.Transaction
 import com.jainhardik120.gatepay.ui.BaseViewModel
 import com.jainhardik120.gatepay.ui.CollectUiEvents
 import com.jainhardik120.gatepay.ui.RechargeActivity
@@ -68,6 +71,14 @@ fun HomeScreen() {
                             Text("Recharge")
                         }
                     }
+                    LazyColumn(content = {
+                        itemsIndexed(state.transactions) { index, item ->
+                            Column {
+                                Text(text = item.transactionId)
+                                Text(text = item.amount)
+                            }
+                        }
+                    })
                 }
             }
         }
@@ -99,11 +110,19 @@ class HomeViewModel @Inject constructor(
             transactions.forEach {
                 Log.d(TAG, "UserTransactions: $it")
             }
+            _state.value = _state.value.copy(transactions = transactions.map { it })
+        }
+
+        makeApiCall({ api.listVehicles() }) {
+            it.forEach {
+                Log.d(TAG, "Vehicle: $it")
+            }
         }
     }
 
 }
 
 data class HomeState(
-    val userBalance: Double = 1000.0
+    val userBalance: Double = 1000.0,
+    val transactions: List<Transaction> = emptyList()
 )

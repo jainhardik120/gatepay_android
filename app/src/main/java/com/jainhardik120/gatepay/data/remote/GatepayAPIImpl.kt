@@ -9,9 +9,11 @@ import com.jainhardik120.gatepay.data.remote.dto.GoogleLoginRequest
 import com.jainhardik120.gatepay.data.remote.dto.LoginRequest
 import com.jainhardik120.gatepay.data.remote.dto.LoginResponse
 import com.jainhardik120.gatepay.data.remote.dto.MessageError
+import com.jainhardik120.gatepay.data.remote.dto.MessageResponse
 import com.jainhardik120.gatepay.data.remote.dto.RazorpayInfo
 import com.jainhardik120.gatepay.data.remote.dto.SignupRequest
 import com.jainhardik120.gatepay.data.remote.dto.Transaction
+import com.jainhardik120.gatepay.data.remote.dto.Vehicle
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.ClientRequestException
@@ -114,6 +116,33 @@ class GatepayAPIImpl(
     override suspend fun userTransactions(): Result<Array<Transaction>, MessageError> {
         return performApiRequest {
             requestBuilder(APIRoutes.USER_TRANSACTIONS_ROUTE, HttpMethod.Get)
+        }
+    }
+
+    override suspend fun addVehicle(vehicle: Vehicle): Result<Vehicle, MessageError> {
+        return performApiRequest {
+            requestBuilder(APIRoutes.ADD_VEHICLE_ROUTE, HttpMethod.Post, vehicle)
+        }
+    }
+
+    override suspend fun deleteVehicle(vehicleId: String): Result<MessageResponse, MessageError> {
+        return performApiRequest {
+            requestBuilder(APIRoutes.putDeleteVehicleBaseRoute(vehicleId), HttpMethod.Delete)
+        }
+    }
+
+    override suspend fun listVehicles(): Result<List<Vehicle>, MessageError> {
+        return performApiRequest {
+            requestBuilder(APIRoutes.LIST_VEHICLES_ROUTE, HttpMethod.Get)
+        }
+    }
+
+    override suspend fun editVehicle(
+        vehicle: Vehicle,
+        vehicleId: String
+    ): Result<Vehicle, MessageError> {
+        return performApiRequest {
+            requestBuilder(APIRoutes.putDeleteVehicleBaseRoute(vehicleId), HttpMethod.Put, vehicle)
         }
     }
 }
