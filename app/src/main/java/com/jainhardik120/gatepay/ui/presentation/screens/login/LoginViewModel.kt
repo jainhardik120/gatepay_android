@@ -18,6 +18,7 @@ import com.jainhardik120.gatepay.data.remote.dto.GoogleLoginRequest
 import com.jainhardik120.gatepay.data.remote.dto.LoginRequest
 import com.jainhardik120.gatepay.data.remote.dto.LoginResponse
 import com.jainhardik120.gatepay.data.remote.dto.SignupRequest
+import com.jainhardik120.gatepay.data.remote.dto.UpdateTokenRequest
 import com.jainhardik120.gatepay.ui.BaseViewModel
 import com.jainhardik120.gatepay.ui.UiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -41,7 +42,18 @@ class LoginViewModel @Inject constructor(
 
     private fun handleSuccessfulLogin(loginResponse: LoginResponse) {
         keyValueStorage.storeValue(KeyValueStorage.LANDING_DONE_KEY, !loginResponse.isNewUser)
-        keyValueStorage.saveLoginResponse(loginResponse)
+        val firebaseToken = keyValueStorage.getValue(KeyValueStorage.FIREBASE_TOKEN_KEY)
+        if (firebaseToken == null) {
+            keyValueStorage.saveLoginResponse(loginResponse)
+        } else {
+            makeApiCall({
+                api.updateToken(UpdateTokenRequest(firebaseToken), loginResponse.token)
+            }, onDoneExecuting = {
+                keyValueStorage.saveLoginResponse(loginResponse)
+            }) {
+
+            }
+        }
     }
 
 

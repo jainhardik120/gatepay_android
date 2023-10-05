@@ -13,6 +13,7 @@ import com.jainhardik120.gatepay.data.remote.dto.MessageResponse
 import com.jainhardik120.gatepay.data.remote.dto.RazorpayInfo
 import com.jainhardik120.gatepay.data.remote.dto.SignupRequest
 import com.jainhardik120.gatepay.data.remote.dto.Transaction
+import com.jainhardik120.gatepay.data.remote.dto.UpdateTokenRequest
 import com.jainhardik120.gatepay.data.remote.dto.Vehicle
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -92,6 +93,22 @@ class GatepayAPIImpl(
     override suspend fun googleLogin(request: GoogleLoginRequest): Result<LoginResponse, MessageError> {
         return performApiRequest {
             requestBuilder(APIRoutes.GOOGLE_LOGIN_ROUTE, HttpMethod.Post, request)
+        }
+    }
+
+    override suspend fun updateToken(
+        request: UpdateTokenRequest,
+        authToken: String
+    ): Result<MessageResponse, MessageError> {
+        return performApiRequest {
+            client.request(APIRoutes.UPDATE_FIREBASE_TOKEN_ROUTE) {
+                this.method = HttpMethod.Post
+                contentType(ContentType.Application.Json)
+                setBody(request)
+                headers {
+                    bearerAuth(authToken)
+                }
+            }.body()
         }
     }
 

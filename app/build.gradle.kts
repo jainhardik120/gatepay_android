@@ -5,6 +5,7 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization")
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -100,5 +101,20 @@ dependencies {
     implementation (libs.play.services.auth)
 
     implementation(libs.checkout)
+
+    implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
+    implementation("com.google.firebase:firebase-analytics-ktx")
+
+
+    // Firebase Cloud Messaging (Java)
+    implementation("com.google.firebase:firebase-messaging")
+
+    // Firebase Cloud Messaging (Kotlin)
+    implementation("com.google.firebase:firebase-messaging-ktx")
+
+    implementation("com.google.accompanist:accompanist-permissions:0.33.2-alpha")
+
+    implementation("androidx.work:work-runtime-ktx:2.8.1")
+
 
 }

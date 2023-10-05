@@ -10,6 +10,8 @@ object APIRoutes {
     const val SIGNUP_ROUTE = "$AUTH_BASE_URL/register"
     const val GOOGLE_LOGIN_ROUTE = "$AUTH_BASE_URL/googleLogin"
 
+    const val UPDATE_FIREBASE_TOKEN_ROUTE = "$AUTH_BASE_URL/updateToken"
+
     private const val PAYMENTS_BASE_URL = "https://$HOST/api/payments"
     const val CHECK_BALANCE_ROUTE = "$PAYMENTS_BASE_URL/checkBalance"
     const val CHECKOUT_ROUTE = "$PAYMENTS_BASE_URL/checkout"

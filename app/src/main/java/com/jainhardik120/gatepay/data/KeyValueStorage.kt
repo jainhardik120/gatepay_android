@@ -43,6 +43,7 @@ class KeyValueStorage(
         const val EMAIL_KEY = "EMAIL"
         const val USER_ID_KEY = "USER_ID"
         const val LANDING_DONE_KEY = "LANDING_DONE"
+        const val FIREBASE_TOKEN_KEY = "FIREBASE_TOKEN"
     }
 
     fun getValue(key: String): String? {
