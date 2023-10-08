@@ -44,7 +44,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = "1.5.3"
     }
     packaging {
         resources {
@@ -54,7 +54,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.core.ktx)
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.activity.compose)
@@ -70,9 +69,6 @@ dependencies {
     androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
-
-
-
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.ktor.client.core)
     implementation(libs.ktor.client.cio)
@@ -81,40 +77,22 @@ dependencies {
     implementation(libs.ktor.client.content.negotiation)
     implementation(libs.ktor.serialization.kotlinx.json)
     implementation (libs.logback.classic)
-
     implementation (libs.hilt.android)
     kapt (libs.hilt.android.compiler)
     kapt (libs.androidx.hilt.compiler)
     implementation (libs.androidx.hilt.navigation.compose)
-
     implementation (libs.androidx.lifecycle.viewmodel.compose)
     implementation (libs.androidx.navigation.compose)
-
     implementation(libs.kotlinx.coroutines.core)
     implementation (libs.kotlinx.coroutines.android)
-
     implementation (libs.androidx.lifecycle.viewmodel.ktx)
-
     implementation(libs.androidx.material.icons.extended)
-
-
     implementation (libs.play.services.auth)
-
     implementation(libs.checkout)
-
     implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
     implementation("com.google.firebase:firebase-analytics-ktx")
-
-
-    // Firebase Cloud Messaging (Java)
     implementation("com.google.firebase:firebase-messaging")
-
-    // Firebase Cloud Messaging (Kotlin)
     implementation("com.google.firebase:firebase-messaging-ktx")
-
     implementation("com.google.accompanist:accompanist-permissions:0.33.2-alpha")
-
     implementation("androidx.work:work-runtime-ktx:2.8.1")
-
-
 }

@@ -6,5 +6,6 @@ data class LoginState(
     val registerEmail: String = "",
     val registerName: String = "",
     val registerPassword: String = "",
-    val confirmPassword: String = ""
+    val confirmPassword: String = "",
+    val loading: Boolean = false
 )

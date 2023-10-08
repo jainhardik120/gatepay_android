@@ -3,8 +3,8 @@
 
 buildscript{
     dependencies{
-        classpath("org.jetbrains.kotlin:kotlin-serialization:1.8.10")
-        classpath("com.google.dagger:hilt-android-gradle-plugin:2.46.1")
+        classpath(libs.kotlin.serialization)
+        classpath(libs.hilt.android.gradle.plugin)
     }
 }
 

@@ -40,6 +40,14 @@ class LoginViewModel @Inject constructor(
     private var _state = mutableStateOf(LoginState())
     val state: State<LoginState> = _state
 
+    override fun apiPreExecuting() {
+        _state.value = _state.value.copy(loading = true)
+    }
+
+    override fun apiDoneExecuting() {
+        _state.value = _state.value.copy(loading = false)
+    }
+
     private fun handleSuccessfulLogin(loginResponse: LoginResponse) {
         keyValueStorage.storeValue(KeyValueStorage.LANDING_DONE_KEY, !loginResponse.isNewUser)
         val firebaseToken = keyValueStorage.getValue(KeyValueStorage.FIREBASE_TOKEN_KEY)
@@ -49,6 +57,7 @@ class LoginViewModel @Inject constructor(
             makeApiCall({
                 api.updateToken(UpdateTokenRequest(firebaseToken), loginResponse.token)
             }, onDoneExecuting = {
+                apiDoneExecuting()
                 keyValueStorage.saveLoginResponse(loginResponse)
             }) {
 

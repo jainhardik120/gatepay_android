@@ -1,6 +1,5 @@
 package com.jainhardik120.gatepay
 
-import android.util.Log
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.jainhardik120.gatepay.data.KeyValueStorage
@@ -20,6 +19,10 @@ class MessagingService : FirebaseMessagingService() {
     private val job = SupervisorJob()
     private val scope = CoroutineScope(Dispatchers.IO + job)
 
+    companion object {
+        private const val TAG = "FirebaseMessagingService"
+    }
+
     @Inject
     lateinit var gatepayAPI: GatepayAPI
 
@@ -38,15 +41,26 @@ class MessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
-        message.notification?.let {
-            it.body?.let {
-                Log.d("FirebaseMessagingService", "onMessageReceived: $it")
-            }
+        val title = message.data["title"]
+        val body = message.data["message"]
+        if (title != null && body != null) {
+//            sendNotification(title, body)
         }
     }
+//
+//    private fun sendNotification(title : String, message : String){
+//        val intent = Intent(applicationContext, MainActivity::class.java)
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+//        intent.putExtra("pushnotification", "yes");
+//        val pendingIntent = PendingIntent.getActivity(this, 0, intent,
+//            PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE)
+//
+//    }
 
     override fun onDestroy() {
         super.onDestroy()
         job.cancel()
     }
+
+
 }

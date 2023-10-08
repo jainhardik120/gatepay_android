@@ -29,13 +29,19 @@ abstract class BaseViewModel : ViewModel() {
         sendUiEvent(UiEvent.ShowSnackbar(message))
     }
 
+    open fun apiPreExecuting() {
+
+    }
+
+    open fun apiDoneExecuting() {
+
+    }
+
     protected fun <T, R> makeApiCall(
         call: suspend () -> Result<T, R>,
-        preExecuting: (() -> Unit)? = {
-
-        },
+        preExecuting: (() -> Unit)? = { apiPreExecuting() },
         onDoneExecuting: (() -> Unit)? = {
-
+            apiDoneExecuting()
         },
         onException: (String) -> Unit = { errorMessage ->
             Log.d(TAG, "makeApiCall: $errorMessage")
