@@ -26,7 +26,7 @@ abstract class BaseViewModel : ViewModel() {
     }
 
     open fun onTextException(message: String) {
-        sendUiEvent(UiEvent.ShowSnackbar(message))
+        sendUiEvent(UiEvent.ShowSnackBar(message))
     }
 
     open fun apiPreExecuting() {

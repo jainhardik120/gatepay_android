@@ -22,7 +22,7 @@ fun CollectUiEvents(
                     navHostController.navigate(event.route)
                 }
 
-                is UiEvent.ShowSnackbar -> {
+                is UiEvent.ShowSnackBar -> {
                     hostState.showSnackbar(event.message)
                 }
 

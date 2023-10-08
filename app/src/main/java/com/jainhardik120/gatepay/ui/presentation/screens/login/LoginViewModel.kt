@@ -121,7 +121,7 @@ class LoginViewModel @Inject constructor(
                         api.login(LoginRequest(state.value.loginEmail, state.value.loginPassword))
                     }, onSuccess = { handleSuccessfulLogin(it) })
                 } else {
-                    sendUiEvent(UiEvent.ShowSnackbar("Email and Password Required"))
+                    sendUiEvent(UiEvent.ShowSnackBar("Email and Password Required"))
                 }
             }
 
@@ -148,7 +148,7 @@ class LoginViewModel @Inject constructor(
             LoginEvent.RegisterButtonClick -> {
                 if (state.value.registerEmail.isNotEmpty() && state.value.registerName.isNotEmpty() && state.value.registerPassword.isNotEmpty() && state.value.confirmPassword.isNotEmpty()) {
                     if (state.value.registerPassword != state.value.confirmPassword) {
-                        sendUiEvent(UiEvent.ShowSnackbar("Password and Confirm Password must match"))
+                        sendUiEvent(UiEvent.ShowSnackBar("Password and Confirm Password must match"))
                     } else {
                         makeApiCall({
                             api.register(
@@ -161,7 +161,7 @@ class LoginViewModel @Inject constructor(
                         }, onSuccess = { handleSuccessfulLogin(it) })
                     }
                 } else {
-                    sendUiEvent(UiEvent.ShowSnackbar("All fields are necessary"))
+                    sendUiEvent(UiEvent.ShowSnackBar("All fields are necessary"))
                 }
             }
 
