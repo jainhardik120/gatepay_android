@@ -24,4 +24,8 @@ object APIRoutes {
     fun putDeleteVehicleBaseRoute(vehicleId: String): String {
         return "$VEHICLES_BASE_URL/$vehicleId"
     }
+
+    private const val PARKING_BASE_URL = "https://$HOST/api/parking"
+
+    const val CURRENT_VEHICLE_ENTRIES = "$PARKING_BASE_URL/currentVehicleEntries"
 }

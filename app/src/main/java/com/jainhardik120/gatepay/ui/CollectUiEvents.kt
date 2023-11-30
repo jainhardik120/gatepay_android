@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 fun CollectUiEvents(
     navHostController: NavHostController,
     events: Flow<UiEvent>,
-    hostState: SnackbarHostState
+    hostState: SnackbarHostState?
 ) {
     val context = LocalContext.current
     LaunchedEffect(key1 = Unit, block = {
@@ -23,7 +23,7 @@ fun CollectUiEvents(
                 }
 
                 is UiEvent.ShowSnackBar -> {
-                    hostState.showSnackbar(event.message)
+                    hostState?.showSnackbar(event.message)
                 }
 
                 is UiEvent.ShowToast -> {

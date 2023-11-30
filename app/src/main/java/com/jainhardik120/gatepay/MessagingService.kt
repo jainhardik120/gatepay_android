@@ -44,23 +44,11 @@ class MessagingService : FirebaseMessagingService() {
         val title = message.data["title"]
         val body = message.data["message"]
         if (title != null && body != null) {
-//            sendNotification(title, body)
+
         }
     }
-//
-//    private fun sendNotification(title : String, message : String){
-//        val intent = Intent(applicationContext, MainActivity::class.java)
-//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//        intent.putExtra("pushnotification", "yes");
-//        val pendingIntent = PendingIntent.getActivity(this, 0, intent,
-//            PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE)
-//
-//    }
-
     override fun onDestroy() {
         super.onDestroy()
         job.cancel()
     }
-
-
 }

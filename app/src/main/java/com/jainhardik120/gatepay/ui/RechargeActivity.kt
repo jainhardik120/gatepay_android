@@ -6,8 +6,12 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
@@ -15,12 +19,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.jainhardik120.gatepay.Constants
 import com.jainhardik120.gatepay.data.remote.GatepayAPI
 import com.jainhardik120.gatepay.data.remote.dto.AmountRequest
 import com.jainhardik120.gatepay.data.remote.dto.RazorpayInfo
+import com.jainhardik120.gatepay.ui.presentation.screens.login.LoadingDialog
 import com.jainhardik120.gatepay.ui.theme.GatePayTheme
 import com.razorpay.Checkout
 import com.razorpay.PaymentData
@@ -50,17 +59,34 @@ class RechargeActivity : ComponentActivity(), PaymentResultWithDataListener {
                             }
                         }
                     })
-                    Column {
-                        OutlinedTextField(
-                            value = state.rechargeAmount,
-                            onValueChange = viewModel::updateRechargeAmount
-                        )
+                    Column(
+                        Modifier
+                            .fillMaxSize()
+                            .padding(vertical = 40.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(text = "Enter amount to add to wallet", fontSize = 20.sp)
+                        Column(
+                            Modifier
+                                .weight(1f)
+                                .fillMaxHeight(), verticalArrangement = Arrangement.Center
+                        ) {
+                            OutlinedTextField(
+                                value = state.rechargeAmount,
+                                onValueChange = viewModel::updateRechargeAmount,
+                                singleLine = true,
+                                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
+                            )
+                        }
                         Button(onClick = {
                             viewModel.createNewCheckoutRequest(activity)
                         }) {
                             Text(text = "Recharge Now")
                         }
                     }
+                }
+                if (state.loading) {
+                    LoadingDialog()
                 }
             }
         }
@@ -90,6 +116,15 @@ class RechargeViewModel @Inject constructor(
 
     fun updateRechargeAmount(newAmount: String) {
         _state.value = _state.value.copy(rechargeAmount = newAmount)
+    }
+
+
+    override fun apiPreExecuting() {
+        _state.value = _state.value.copy(loading = true)
+    }
+
+    override fun apiDoneExecuting() {
+        _state.value = _state.value.copy(loading = false)
     }
 
     fun createNewCheckoutRequest(activity: Activity) {
@@ -127,5 +162,6 @@ class RechargeViewModel @Inject constructor(
 }
 
 data class RechargeState(
-    val rechargeAmount: String = ""
+    val rechargeAmount: String = "",
+    val loading: Boolean = false
 )

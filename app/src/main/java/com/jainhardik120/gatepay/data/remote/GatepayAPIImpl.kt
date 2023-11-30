@@ -5,6 +5,7 @@ import com.jainhardik120.gatepay.data.KeyValueStorage
 import com.jainhardik120.gatepay.data.remote.dto.AmountRequest
 import com.jainhardik120.gatepay.data.remote.dto.BalanceResponse
 import com.jainhardik120.gatepay.data.remote.dto.CheckoutResponse
+import com.jainhardik120.gatepay.data.remote.dto.CurrentVehicleEntries
 import com.jainhardik120.gatepay.data.remote.dto.GoogleLoginRequest
 import com.jainhardik120.gatepay.data.remote.dto.LoginRequest
 import com.jainhardik120.gatepay.data.remote.dto.LoginResponse
@@ -160,6 +161,12 @@ class GatepayAPIImpl(
     ): Result<Vehicle, MessageError> {
         return performApiRequest {
             requestBuilder(APIRoutes.putDeleteVehicleBaseRoute(vehicleId), HttpMethod.Put, vehicle)
+        }
+    }
+
+    override suspend fun currentVehicleEntries(): Result<CurrentVehicleEntries, MessageError> {
+        return performApiRequest {
+            requestBuilder(APIRoutes.CURRENT_VEHICLE_ENTRIES, HttpMethod.Get)
         }
     }
 }
