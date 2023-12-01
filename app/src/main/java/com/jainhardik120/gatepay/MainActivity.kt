@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
             ComposeView(this).apply {
                 consumeWindowInsets = false
                 setContent {
-                    GatePayTheme {
+                    GatePayTheme(dynamicColor = false) {
                         Surface(
                             modifier = Modifier.fillMaxSize(),
                             color = MaterialTheme.colorScheme.background

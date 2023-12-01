@@ -49,7 +49,7 @@ class RechargeActivity : ComponentActivity(), PaymentResultWithDataListener {
         val activity: Activity = this
         setContent {
             val state = viewModel.state.value
-            GatePayTheme {
+            GatePayTheme(dynamicColor = false) {
                 Surface(Modifier.fillMaxSize()) {
                     val context = LocalContext.current
                     LaunchedEffect(key1 = Unit, block = {
