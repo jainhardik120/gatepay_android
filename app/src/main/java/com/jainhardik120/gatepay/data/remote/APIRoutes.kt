@@ -28,4 +28,5 @@ object APIRoutes {
     private const val PARKING_BASE_URL = "https://$HOST/api/parking"
 
     const val CURRENT_VEHICLE_ENTRIES = "$PARKING_BASE_URL/currentVehicleEntries"
+    const val PAST_VEHICLE_HISTORY = "$PARKING_BASE_URL/pastVehicleHistory"
 }

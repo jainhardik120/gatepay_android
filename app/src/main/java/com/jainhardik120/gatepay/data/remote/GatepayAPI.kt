@@ -10,6 +10,7 @@ import com.jainhardik120.gatepay.data.remote.dto.LoginRequest
 import com.jainhardik120.gatepay.data.remote.dto.LoginResponse
 import com.jainhardik120.gatepay.data.remote.dto.MessageError
 import com.jainhardik120.gatepay.data.remote.dto.MessageResponse
+import com.jainhardik120.gatepay.data.remote.dto.PastVehicleEntries
 import com.jainhardik120.gatepay.data.remote.dto.RazorpayInfo
 import com.jainhardik120.gatepay.data.remote.dto.SignupRequest
 import com.jainhardik120.gatepay.data.remote.dto.Transaction
@@ -36,4 +37,5 @@ interface GatepayAPI {
     suspend fun editVehicle(vehicle: Vehicle, vehicleId: String): Result<Vehicle, MessageError>
 
     suspend fun currentVehicleEntries(): Result<CurrentVehicleEntries, MessageError>
+    suspend fun pastVehicleHistory(): Result<PastVehicleEntries, MessageError>
 }

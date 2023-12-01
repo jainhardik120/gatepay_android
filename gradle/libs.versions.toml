@@ -22,6 +22,7 @@ logback-classic = "1.2.11"
 material-icons-extended = "1.5.4"
 navigation-compose = "2.7.5"
 play-services-auth = "20.7.0"
+material3-android = "1.2.0-alpha12"
 
 [libraries]
 androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hilt-compiler" }
@@ -59,7 +60,7 @@ ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-material3-android = { group = "androidx.compose.material3", name = "material3-android", version.ref = "material3-android" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

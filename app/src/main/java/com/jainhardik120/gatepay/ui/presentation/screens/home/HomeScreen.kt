@@ -48,6 +48,7 @@ import androidx.navigation.compose.rememberNavController
 import com.jainhardik120.gatepay.R
 import com.jainhardik120.gatepay.ui.CollectUiEvents
 import com.jainhardik120.gatepay.ui.RechargeActivity
+import com.jainhardik120.gatepay.ui.presentation.screens.home.history.HistoryScreen
 import com.jainhardik120.gatepay.ui.presentation.screens.home.transactions.TransactionsScreen
 import com.jainhardik120.gatepay.ui.presentation.screens.home.vehicles.VehiclesScreen
 
@@ -146,6 +147,9 @@ fun HomeScreen() {
                 }
                 composable(route = "vehicles") {
                     VehiclesScreen()
+                }
+                composable(route = "history") {
+                    HistoryScreen()
                 }
             }
         }

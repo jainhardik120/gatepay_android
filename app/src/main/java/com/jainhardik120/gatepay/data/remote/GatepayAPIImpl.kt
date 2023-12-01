@@ -11,6 +11,7 @@ import com.jainhardik120.gatepay.data.remote.dto.LoginRequest
 import com.jainhardik120.gatepay.data.remote.dto.LoginResponse
 import com.jainhardik120.gatepay.data.remote.dto.MessageError
 import com.jainhardik120.gatepay.data.remote.dto.MessageResponse
+import com.jainhardik120.gatepay.data.remote.dto.PastVehicleEntries
 import com.jainhardik120.gatepay.data.remote.dto.RazorpayInfo
 import com.jainhardik120.gatepay.data.remote.dto.SignupRequest
 import com.jainhardik120.gatepay.data.remote.dto.Transaction
@@ -167,6 +168,12 @@ class GatepayAPIImpl(
     override suspend fun currentVehicleEntries(): Result<CurrentVehicleEntries, MessageError> {
         return performApiRequest {
             requestBuilder(APIRoutes.CURRENT_VEHICLE_ENTRIES, HttpMethod.Get)
+        }
+    }
+
+    override suspend fun pastVehicleHistory(): Result<PastVehicleEntries, MessageError> {
+        return performApiRequest {
+            requestBuilder(APIRoutes.PAST_VEHICLE_HISTORY, HttpMethod.Get)
         }
     }
 }
